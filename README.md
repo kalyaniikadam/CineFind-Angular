@@ -1,59 +1,102 @@
-# Cinefind
+# 🎬 CineFind – Angular Movie Discovery App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.28.
+Discover movies, explore genres, and find your next favorite film with **CineFind**, a cinematic movie discovery web application built using Angular.
 
-## Development server
+🌐 **Live Website:** https://cine-find-angular-41ni465pm-kalyani-kadam.vercel.app/
 
-To start a local development server, run:
+📂 **GitHub Repository:** https://github.com/kalyaniikadam/CineFind-Angular
+
+---
+
+## ✨ Features
+
+- 🎥 Cinematic movie discovery interface
+- 🔍 Movie search functionality
+- 🎭 Genre-based movie exploration
+- ⭐ Movie ratings and information
+- 🎬 Movie details and poster displays
+- 📱 Responsive user interface
+- 🧭 Navigation and organized movie sections
+
+*Note: Keep only the features that are currently implemented in your app.*
+
+## 🛠️ Technologies Used
+
+- Angular
+- TypeScript
+- HTML5
+- CSS3
+- JavaScript
+- Git and GitHub
+- Vercel (Deployment)
+
+## 📸 Screenshots
+
+Add screenshots of your application here.
+
+### Home Page
+<!-- Add your homepage screenshot here -->
+
+### Movie Discovery
+<!-- Add your movie listing screenshot here -->
+
+### Movie Details
+<!-- Add your movie details screenshot here -->
+
+## 🚀 Run Locally
+
+Follow these steps to run CineFind on your computer.
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/kalyaniikadam/CineFind-Angular.git
+```
+
+**2. Navigate to the project folder**
+
+```bash
+cd CineFind-Angular
+```
+
+**3. Install dependencies**
+
+```bash
+npm install
+```
+
+**4. Start the development server**
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open your browser at:
 
-## Code scaffolding
+http://localhost:4200
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🏗️ Production Build
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+To generate a production build, run:
 
 ```bash
-ng generate --help
+npm run build
 ```
 
-## Building
+## 🌍 Deployment
 
-To build the project run:
+CineFind is deployed using **Vercel**.
 
-```bash
-ng build
-```
+The application is built with Angular and hosted as a publicly accessible website.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 👩‍💻 Author
 
-## Running unit tests
+**Kalyani Kadam**
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- GitHub: [@kalyaniikadam](https://github.com/kalyaniikadam)
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+⭐ If you like this project, consider giving the repository a star!
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Made with ❤️ and Angular.**
