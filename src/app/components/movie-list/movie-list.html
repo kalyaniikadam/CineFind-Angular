@@ -1,0 +1,333 @@
+<!-- NAVBAR -->
+<nav class="cinema-nav">
+    <a class="brand" href="#">CINE<span>FIND</span><small>+</small></a>
+
+    <div class="nav-links">
+        <a href="#" class="active">Home</a>
+        <a href="#movies">Movies</a>
+        <a href="#discover">Discover</a>
+    </div>
+
+    <div class="nav-status">
+        <span class="status-dot"></span> NOW STREAMING
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-shade"></div>
+
+    <div class="hero-content">
+        <span class="eyebrow">THE GOTHAM COLLECTION</span>
+
+        <h1>WELCOME TO<br><span>GOTHAM.</span></h1>
+
+        <p>
+            Every city has a story. Every story has a dark side.
+            Discover the movies that stay with you.
+        </p>
+
+        <div class="hero-meta">
+            <span>2022</span>
+            <span>•</span>
+            <span>CRIME / ACTION</span>
+            <span>•</span>
+            <span>2H 56M</span>
+        </div>
+
+        <div class="hero-buttons">
+            <button class="watch-button" (click)="openDetails(movies[0])">
+                ▶ EXPLORE THE BATMAN
+            </button>
+
+            <a href="#movies" class="explore-button">
+                EXPLORE COLLECTION ↓
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-bottom">
+        <span>01 / GOTHAM COLLECTION</span>
+        <span>SCROLL TO DISCOVER ↓</span>
+    </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="movie-container" id="movies">
+
+    <header class="section-heading">
+        <span class="eyebrow">YOUR PERSONAL CINEMA</span>
+        <h2>STREAM YOUR <span>MOOD.</span></h2>
+        <p>Find your next favourite story.</p>
+    </header>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+        <span class="search-icon">⌕</span>
+
+        <input type="search" placeholder="Search movies, actors, directors, years..." [(ngModel)]="searchText"
+            aria-label="Search movies" />
+
+        <button class="clear-search" *ngIf="searchText" (click)="searchText = ''">
+            ✕
+        </button>
+
+        <button (click)="clearSearch()">RESET</button>
+    </div>
+
+    <p class="search-count">
+        {{ filteredMovies.length }} movies available
+    </p>
+
+    <!-- GENRE FILTERS -->
+    <section class="filter-section" id="discover">
+        <span class="filter-label">EXPLORE BY GENRE</span>
+
+        <div class="genre-buttons">
+            <button *ngFor="let genre of genres" [class.active]="selectedGenre === genre"
+                (click)="selectedGenre = genre">
+                {{ genre }}
+            </button>
+        </div>
+    </section>
+
+    <!-- SEARCH RESULTS -->
+    <section *ngIf="searchText.trim() || selectedGenre !== 'All'" class="search-results">
+
+        <div class="shelf-heading">
+            <div>
+                <span class="eyebrow">YOUR SEARCH RESULTS</span>
+                <h2>FOUND FOR <span>YOU.</span></h2>
+            </div>
+
+            <span class="movie-count">
+                {{ filteredMovies.length }} TITLES
+            </span>
+        </div>
+
+        <div class="movie-grid">
+            <article class="movie-card" *ngFor="let movie of filteredMovies" (click)="openDetails(movie)">
+
+                <div class="poster-wrapper">
+                    <img [src]="movie.poster" [alt]="movie.name + ' movie poster'" class="movie-poster" loading="lazy"
+                        (error)="onPosterError($event)" />
+
+                    <span class="rating">★ {{ movie.rating }}/10</span>
+
+                    <div class="poster-overlay">
+                        <span class="play-circle">▶</span>
+                        <span>VIEW DETAILS</span>
+                    </div>
+                </div>
+
+                <div class="movie-info">
+                    <h3>{{ movie.name }}</h3>
+
+                    <div class="movie-meta">
+                        <span>{{ movie.year }}</span>
+                        <span>{{ movie.duration }}</span>
+                    </div>
+
+                    <span class="genre-tag">{{ movie.genre }}</span>
+                </div>
+            </article>
+        </div>
+
+        <div *ngIf="filteredMovies.length === 0" class="empty-message">
+            <h3>NO MOVIES FOUND.</h3>
+            <p>Nothing in Gotham matches your search.</p>
+            <button (click)="clearSearch()">CLEAR FILTERS</button>
+        </div>
+    </section>
+
+    <!-- DEFAULT MOVIE COLLECTION -->
+    <div *ngIf="!searchText.trim() && selectedGenre === 'All'">
+
+        <!-- TRENDING -->
+        <section class="movie-shelf">
+            <div class="shelf-heading">
+                <div>
+                    <span class="eyebrow">THE INTERNET IS TALKING</span>
+                    <h2>Trending <span>Now.</span></h2>
+                </div>
+
+                <span class="shelf-number">01 / TRENDING</span>
+            </div>
+
+            <div class="movie-row">
+                <article class="movie-card" *ngFor="let movie of trendingMovies; let i = index"
+                    (click)="openDetails(movie)">
+
+                    <div class="poster-wrapper">
+                        <span class="rank-number">{{ i + 1 }}</span>
+
+                        <img [src]="movie.poster" [alt]="movie.name + ' movie poster'" class="movie-poster"
+                            loading="lazy" (error)="onPosterError($event)" />
+
+                        <span class="rating">★ {{ movie.rating }}/10</span>
+
+                        <div class="poster-overlay">
+                            <span class="play-circle">▶</span>
+                            <span>VIEW DETAILS</span>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <h3>{{ movie.name }}</h3>
+
+                        <div class="movie-meta">
+                            <span>{{ movie.year }}</span>
+                            <span>{{ movie.duration }}</span>
+                        </div>
+
+                        <span class="genre-tag">{{ movie.genre }}</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- CATEGORY SHELVES -->
+        <section class="movie-shelf" *ngFor="let genre of genres.slice(1)">
+
+            <ng-container *ngIf="moviesForGenre(genre).length > 0">
+
+                <div class="shelf-heading">
+                    <div>
+                        <span class="eyebrow">EXPLORE THE COLLECTION</span>
+                        <h2>{{ genre }} <span>Movies.</span></h2>
+                    </div>
+
+                    <span class="shelf-number">CINEFIND COLLECTION</span>
+                </div>
+
+                <div class="movie-row">
+                    <article class="movie-card" *ngFor="let movie of moviesForGenre(genre)"
+                        (click)="openDetails(movie)">
+
+                        <div class="poster-wrapper">
+                            <img [src]="movie.poster" [alt]="movie.name + ' movie poster'" class="movie-poster"
+                                loading="lazy" (error)="onPosterError($event)" />
+
+                            <span class="rating">★ {{ movie.rating }}/10</span>
+
+                            <div class="poster-overlay">
+                                <span class="play-circle">▶</span>
+                                <span>VIEW DETAILS</span>
+                            </div>
+                        </div>
+
+                        <div class="movie-info">
+                            <h3>{{ movie.name }}</h3>
+
+                            <div class="movie-meta">
+                                <span>{{ movie.year }}</span>
+                                <span>{{ movie.duration }}</span>
+                            </div>
+
+                            <span class="genre-tag">{{ movie.genre }}</span>
+                        </div>
+                    </article>
+                </div>
+
+            </ng-container>
+        </section>
+
+    </div>
+</main>
+
+<!-- MOVIE DETAILS MODAL -->
+<div class="modal-backdrop" *ngIf="selectedMovie as movie" (click)="closeDetails()">
+
+    <div class="movie-modal" role="dialog" aria-modal="true" [attr.aria-label]="movie.name + ' details'"
+        (click)="$event.stopPropagation()">
+
+        <button class="close-button" aria-label="Close movie details" (click)="closeDetails()">
+            ✕
+        </button>
+
+        <div class="modal-content">
+
+            <div class="modal-visual">
+                <img [src]="movie.poster" [alt]="movie.name + ' poster'" class="modal-poster"
+                    (error)="onPosterError($event)" />
+
+                <span class="modal-poster-label">
+                    CINEFIND ORIGINAL COLLECTION
+                </span>
+            </div>
+
+            <div class="modal-info">
+                <span class="eyebrow">NOW DISCOVERING</span>
+
+                <h2>{{ movie.name }}</h2>
+
+                <div class="modal-rating">
+                    <span>★ {{ movie.rating }}/10</span>
+                    <span>{{ movie.year }}</span>
+                    <span>{{ movie.duration }}</span>
+                </div>
+
+                <span class="genre-tag">{{ movie.genre }}</span>
+
+                <h4>THE STORY</h4>
+                <p>{{ movie.description }}</p>
+
+                <h4>DIRECTED BY</h4>
+                <p>{{ movie.director }}</p>
+
+                <h4>STARRING</h4>
+                <p>{{ movie.cast }}</p>
+            </div>
+        </div>
+
+        <div class="trailer-section" *ngIf="trailerUrl">
+            <span class="eyebrow">EXPERIENCE THE CINEMA</span>
+            <h3>OFFICIAL TRAILER</h3>
+
+            <div class="video-wrapper">
+                <iframe [src]="trailerUrl" title="Movie trailer" allow="autoplay; encrypted-media; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div class="no-trailer" *ngIf="!trailerUrl">
+            Trailer not available yet.
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="cinema-footer">
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+            <h2>CINE<span>FIND</span><small>+</small></h2>
+            <p>EVERY FRAME HAS A STORY.</p>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-developer">
+            <span class="eyebrow">DESIGNED & DEVELOPED BY</span>
+
+            <h3>KALYANI KADAM</h3>
+
+            <a href="mailto:kadamkalyanii01@gmail.com">
+                ✉ kadamkalyanii01@gmail.com
+            </a>
+
+            <p>Computer Science & Engineering Student</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 CINEFIND+</span>
+        <span>BUILT WITH ANGULAR & PASSION FOR CINEMA.</span>
+    </div>
+
+</footer>
